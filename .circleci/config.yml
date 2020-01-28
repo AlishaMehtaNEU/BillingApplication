@@ -10,7 +10,7 @@ jobs:
       - run: ./mvnw clean install # mvn clean install tells Maven to do the clean phase in each 	module before running the install phase for each module.
 workflows:
   version: 2
-  pr_check:
+  pr_check_job:
     jobs:
       - pr_check
 
