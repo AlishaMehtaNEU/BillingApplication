@@ -5,7 +5,7 @@ jobs:
       - image: circleci/openjdk:8-jdk # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run: echo "Running pr_check_job" # run the `echo` command
       - run: 
           command: |
             cd Assignment2
@@ -15,7 +15,7 @@ jobs:
       - image: circleci/openjdk:8-jdk # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "hello world" # run the `echo` command
+      - run: echo "Running build" # run the `echo` command
       - run: 
           command: |
             cd Assignment2
@@ -28,7 +28,7 @@ workflows:
       - pr_check_job
   build-deploy:
     jobs:
-      - build
+      - build:
           filters:
             branches:
               only:
