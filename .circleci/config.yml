@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  pr_check:
+  pr_check_job:
     docker: 
       - image: circleci/openjdk:8-jdk # the primary container, where your job's commands are run
     steps:
@@ -13,7 +13,7 @@ jobs:
 # mvn clean install tells Maven to do the clean phase in each module before running the install phase for each module.
 workflows:
   version: 2
-  pr_check_job:
+  pr_check:
     jobs:
-      - pr_check
+      - pr_check_job
 
