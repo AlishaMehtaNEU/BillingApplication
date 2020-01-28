@@ -7,9 +7,10 @@ jobs:
       - checkout # check out the code in the project directory
       - run: echo "hello world" # run the `echo` command
       - run: 
-	    command: |
-		cd Assignment2
-		./mvnw clean install # mvn clean install tells Maven to do the clean phase in each 			module before running the install phase for each module.
+            command: |
+                cd Assignment2
+                ./mvnw clean install 
+# mvn clean install tells Maven to do the clean phase in each module before running the install phase for each module.
 workflows:
   version: 2
   pr_check_job:
