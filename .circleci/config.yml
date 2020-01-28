@@ -1,0 +1,15 @@
+version: 2.1
+jobs:
+  pr_check:
+    docker: 
+      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+    steps:
+      - checkout # check out the code in the project directory
+      - run: echo "hello world" # run the `echo` command
+      - run: ./mvnw clean install # mvn clean install tells Maven to do the clean phase in each 	module before running the install phase for each module.
+workflows:
+  version: 2
+  pr_check_job:
+    jobs:
+      - pr_check
+
