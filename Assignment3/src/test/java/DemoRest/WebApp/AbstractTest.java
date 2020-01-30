@@ -104,6 +104,11 @@ public class AbstractTest {
             }
 
             @Override
+            public Users findById(String id) {
+                return null;
+            }
+
+            @Override
             public List<Users> findAll() {
                 return null;
             }
