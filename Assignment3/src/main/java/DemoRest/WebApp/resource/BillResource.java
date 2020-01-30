@@ -36,7 +36,7 @@ public class BillResource {
             Bill newBillToCreate = new Bill();
             if(!bill.containsKey("vendor") || !bill.containsKey("bill_date") || !bill.containsKey("due_date")
             || !bill.containsKey("amount_due") || !bill.containsKey("categories") || !bill.containsKey("paymentStatus")){
-                new ResponseEntity(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
             for (String key : bill.keySet()) {
                 if (key.equals("id") && (String) bill.get(key) != null)
@@ -248,10 +248,9 @@ public class BillResource {
 
             Bill newBillToUpdate = billRepo.findBillById(id);
             Users users = userRepository.findByEmailAddress(authentication.getName());
-
             if(!bill.containsKey("vendor") || !bill.containsKey("bill_date") || !bill.containsKey("due_date")
                     || !bill.containsKey("amount_due") || !bill.containsKey("categories") || !bill.containsKey("paymentStatus")){
-                new ResponseEntity(HttpStatus.BAD_REQUEST);
+                return new ResponseEntity(HttpStatus.BAD_REQUEST);
             }
 
             if (!users.getId().equals(newBillToUpdate.getOwnerId())) {
