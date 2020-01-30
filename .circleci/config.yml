@@ -8,7 +8,7 @@ jobs:
       - run: echo "Running pr_check_job" # run the `echo` command
       - run: 
           command: |
-            cd Assignment2
+            cd Assignment3
             ./mvnw clean install 
   build:
     docker: 
@@ -18,7 +18,7 @@ jobs:
       - run: echo "Running build" # run the `echo` command
       - run: 
           command: |
-            cd Assignment2
+            cd Assignment3
             ./mvnw clean install 
 # mvn clean install tells Maven to do the clean phase in each module before running the install phase for each module.
 workflows:
