@@ -8,17 +8,17 @@ jobs:
       - run: echo "Running pr_check_job" # run the `echo` command
       - run: 
           command: |
-            cd Assignment2
+            cd Assignment3
             ./mvnw clean install 
   build:
     docker: 
       - image: circleci/openjdk:8-jdk # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "Running build" # run the `echo` command
+      - run: echo "Running build on master" # run the `echo` command
       - run: 
           command: |
-            cd Assignment2
+            cd Assignment3
             ./mvnw clean install 
 # mvn clean install tells Maven to do the clean phase in each module before running the install phase for each module.
 workflows:
