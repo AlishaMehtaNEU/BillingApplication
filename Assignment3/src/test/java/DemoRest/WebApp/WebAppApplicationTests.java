@@ -17,26 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 
-@SpringBootTest
-@RunWith(SpringRunner.class)
-@WebMvcTest
 public class  WebAppApplicationTests {
 
-//	@Autowired
-//	MockMvc mockMvc;
-//
-//	@MockBean
-//	UserRepository userRepository;
-//
-//	@Test
-//	void contextLoads() throws Exception {
-//		Mockito.when(userRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
-//
-//		MvcResult mvcResult = mockMvc.perform(
-//				MockMvcRequestBuilders.get("/v1/user/self")
-//				.accept(MediaType.APPLICATION_JSON)
-//		).andReturn();
-//
-//		Mockito.verify(userRepository.findAll());
-//	}
 }
