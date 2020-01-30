@@ -34,6 +34,10 @@ public class BillResource {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         try {
             Bill newBillToCreate = new Bill();
+            if(!bill.containsKey("vendor") || !bill.containsKey("bill_date") || !bill.containsKey("due_date")
+            || !bill.containsKey("amount_due") || !bill.containsKey("categories") || !bill.containsKey("paymentStatus")){
+                new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
             for (String key : bill.keySet()) {
                 if (key.equals("id") && (String) bill.get(key) != null)
                     return new ResponseEntity("Id cannot be inserted", HttpStatus.BAD_REQUEST);
@@ -245,19 +249,24 @@ public class BillResource {
             Bill newBillToUpdate = billRepo.findBillById(id);
             Users users = userRepository.findByEmailAddress(authentication.getName());
 
+            if(!bill.containsKey("vendor") || !bill.containsKey("bill_date") || !bill.containsKey("due_date")
+                    || !bill.containsKey("amount_due") || !bill.containsKey("categories") || !bill.containsKey("paymentStatus")){
+                new ResponseEntity(HttpStatus.BAD_REQUEST);
+            }
+
             if (!users.getId().equals(newBillToUpdate.getOwnerId())) {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             }
             else if(users.getId().equals(newBillToUpdate.getOwnerId())) {
                 for (String key : bill.keySet()) {
                     if (key.equals("id") && (String) bill.get(key) != null)
-                        return new ResponseEntity("Id cannot be inserted", HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity("Id cannot be updated", HttpStatus.BAD_REQUEST);
                     if (key.equals("created_ts") && (String) bill.get(key) != null)
-                        return new ResponseEntity("created_ts cannot be inserted", HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity("created_ts cannot be updated", HttpStatus.BAD_REQUEST);
                     if (key.equals("updated_ts") && (String) bill.get(key) != null)
-                        return new ResponseEntity("updated_ts cannot be inserted", HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity("updated_ts cannot be updated", HttpStatus.BAD_REQUEST);
                     if (key.equals("owner_id") && (String) bill.get(key) != null)
-                        return new ResponseEntity("owner_id cannot be inserted", HttpStatus.BAD_REQUEST);
+                        return new ResponseEntity("owner_id cannot be updated", HttpStatus.BAD_REQUEST);
 
                     if (key.equals("vendor")) {
                         if (key.equals("vendor") && ((String) bill.get(key) == null || (String) bill.get(key) == "")) {
