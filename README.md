@@ -13,7 +13,6 @@ Building a Bill Tracking application. It will allow users to create, update, del
 1. Clone repository
 2. Import maven project **Assignment3** in the **webapp** directory into intelliJ
 3. Run command mvn clean and mvn install
-4. Run WebAppApplication
 
 ## Deploy Instructions
 1. Create a new database named 'mysql' in MariaDB.
@@ -27,7 +26,7 @@ Building a Bill Tracking application. It will allow users to create, update, del
 3. Connect to MySQL databse.
 4. Add the datasource connection URL in application.yml
 5. Add username and password in application.yml to connect to the database.
-6. 3. Run IntelliJ project imported in above steps as **SpringBoot Application**
+6. Run IntelliJ project imported in above steps as **SpringBoot Application**
 
 ## Test Instructions
 1. Run command ```mvn test``` to run all tests
