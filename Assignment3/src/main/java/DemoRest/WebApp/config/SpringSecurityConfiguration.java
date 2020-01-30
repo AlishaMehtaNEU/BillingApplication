@@ -23,8 +23,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/v1/user").permitAll();
+        http.authorizeRequests().antMatchers("/v1/user").permitAll();
         http.csrf().disable().authorizeRequests()
                 .anyRequest().authenticated()
                 .and().httpBasic()
@@ -44,5 +43,15 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(new BCryptPasswordEncoder());
     }
+
+
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().withUser("john123").password("$2a$04$LiHiL.zHEUuXZvNHqmbycONIwwWX4ShwhqxJD6uo8B1jsb.c/Uehi").roles("USER");
+
+//        System.out.println("userDetailsService() -- " + userDetailsService());
+//        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
+//    }
 
 }
