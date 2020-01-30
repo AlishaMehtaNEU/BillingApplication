@@ -15,7 +15,7 @@ jobs:
       - image: circleci/openjdk:8-jdk # the primary container, where your job's commands are run
     steps:
       - checkout # check out the code in the project directory
-      - run: echo "Running build" # run the `echo` command
+      - run: echo "Running build on master" # run the `echo` command
       - run: 
           command: |
             cd Assignment3
