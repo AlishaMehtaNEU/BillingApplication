@@ -48,13 +48,13 @@ public class UserResource {
         Map<String, Object> newUser = new HashMap<>();
 
         Users users = userRepository.findByEmailAddress(authentication.getName());
+
         newUser.put("id", users.getId());
         newUser.put("email_address", users.getEmailAddress());
         newUser.put("last_name", users.getLast_name());
         newUser.put("first_name", users.getFirst_name());
         newUser.put("account_created", users.getAccount_created());
         newUser.put("account_updated", users.getAccount_updated());
-
         return new ResponseEntity(newUser, HttpStatus.OK);
     }
 

@@ -3,16 +3,17 @@ package DemoRest.WebApp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Component
 @Entity
 @Table(name = "users")
 public class Users {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
