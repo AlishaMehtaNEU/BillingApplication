@@ -9,8 +9,5 @@ spring:
   jpa:
     generate-ddl: false
     show-sql: true
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 server:
-  port: 8081
+  port: 8082
