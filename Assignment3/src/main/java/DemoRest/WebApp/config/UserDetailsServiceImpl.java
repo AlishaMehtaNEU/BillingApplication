@@ -3,6 +3,7 @@ package DemoRest.WebApp.config;
 import DemoRest.WebApp.model.Users;
 import DemoRest.WebApp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
