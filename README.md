@@ -11,8 +11,12 @@ Building a Bill Tracking application. It will allow users to create, update, del
 
 ## Build Instructions
 1. Clone repository
-2. Import maven project **restapi** in the **webapp** directory into eclipse
-3. Right Click restapi > Maven > Update Maven Project > OK
+2. Import maven project **Assignment3** in the **webapp** directory into intelliJ
+3. Run command mvn clean and mvn install
+4. Run WebAppApplication
+
+## Test Instructions
+1. Run the maven project imported in intelliJ as Run tests in DemoRest.WebApp
 
 ## Deploy Instructions
 
