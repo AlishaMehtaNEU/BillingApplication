@@ -80,7 +80,7 @@ public class FileResource {
             File file = new File();
             file.setFile_name(attachment.getOriginalFilename());
             file.setUpload_date(new Date());
-            file.setUrl(UPLOAD_FOLDER);
+
             file.setBill(id);
             file.setFile_owner(users.getId());
             file.setMimetype(attachment.getContentType());
@@ -94,6 +94,7 @@ public class FileResource {
                 Path path = Paths.get(UPLOAD_FOLDER + x + attachment.getOriginalFilename());
                 Files.write(path, bytes);
                 file.setFile_name_dir(x + attachment.getOriginalFilename());
+                file.setUrl(UPLOAD_FOLDER + x + attachment.getOriginalFilename());
             }
 
             fileRepository.save(file);
@@ -170,7 +171,7 @@ public class FileResource {
             return new ResponseEntity( HttpStatus.NOT_FOUND);
         }
         else if(!file.getBill().equals(billId)){
-            return new ResponseEntity( HttpStatus.BAD_REQUEST);
+            return new ResponseEntity( HttpStatus.UNAUTHORIZED);
         }
 
         if(file.getBill().equals(billId)){
@@ -178,14 +179,15 @@ public class FileResource {
             String filePath = UPLOAD_FOLDER + file.getFile_name_dir();
             Path  fileToDelete = Paths.get(filePath);
             Files.delete(fileToDelete);
-
+            billById.setAttachment(null);
+            billRepo.save(billById);
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
         else
             return new ResponseEntity( HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/{id}/file")
+    @RequestMapping(method = RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, value = "/{id}/file/")
     public ResponseEntity updateAttachment(HttpServletRequest request, @PathVariable String id, @RequestParam("attachment") MultipartFile attachment) throws ParseException, IOException {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -216,7 +218,7 @@ public class FileResource {
 
             fileExists.setFile_name(attachment.getOriginalFilename());
             fileExists.setUpload_date(new Date());
-            fileExists.setUrl(UPLOAD_FOLDER);
+
             fileExists.setMimetype(attachment.getContentType());
             fileExists.setSize(String.valueOf(attachment.getSize()));
             fileExists.setHash(myHash);
@@ -227,6 +229,7 @@ public class FileResource {
                 Path path = Paths.get(UPLOAD_FOLDER + x + attachment.getOriginalFilename());
                 Files.write(path, bytes);
                 fileExists.setFile_name_dir(x + attachment.getOriginalFilename());
+                fileExists.setUrl(UPLOAD_FOLDER + x + attachment.getOriginalFilename());
             }
 
             fileRepository.save(fileExists);
