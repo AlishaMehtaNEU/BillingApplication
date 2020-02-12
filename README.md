@@ -1,6 +1,4 @@
-Apply IAM passwork policy
- student has setup organization
- 
+
  # CSYE 6225 - Spring 2020
 # webapp
 Building a Bill Tracking application. It will allow users to create, update, delete, attach and read bills.
