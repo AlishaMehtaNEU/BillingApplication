@@ -1,9 +1,11 @@
 package DemoRest.WebApp.resource;
 import DemoRest.WebApp.model.Bill;
+import DemoRest.WebApp.model.File;
 import DemoRest.WebApp.model.Users;
-import DemoRest.WebApp.repository.BillRepo;
-import DemoRest.WebApp.repository.BillRepository;
-import DemoRest.WebApp.repository.UserRepository;
+import DemoRest.WebApp.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -20,14 +25,16 @@ import java.util.*;
 @RequestMapping("/v1")
 public class BillResource {
 
-//    @Autowired
-//    BillRepository billRepository;
+    @Autowired
+    FileRepository fileRepository;
 
     @Autowired
     UserRepository userRepository;
 
     @Autowired
     BillRepo billRepo;
+
+    private static final String UPLOAD_FOLDER = System.getProperty("user.dir")+"/src/main/resources/static/images/";
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/bill/")
     public ResponseEntity addBill(@Valid @RequestBody final Map<String, Object> bill) throws ParseException {
@@ -128,6 +135,7 @@ public class BillResource {
             newBill.put("bill_date", ((String) bill.get("bill_date")).substring(0, 10));
             newBill.put("due_date", ((String) bill.get("due_date")).substring(0, 10));
             newBill.put("amount_due", newBillToCreate.getAmount_due());
+            newBill.put("attachment", new EmptyJsonResponse());
 
             List<String> allCategories = new ArrayList<>();
             if(newBillToCreate.getCategories().contains(",")) {
@@ -147,7 +155,7 @@ public class BillResource {
     }
 
     @GetMapping(value = "/bills")
-    public ResponseEntity getAllBills() {
+    public ResponseEntity getAllBills() throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Users users = userRepository.findByEmailAddress(authentication.getName());
 
@@ -164,6 +172,15 @@ public class BillResource {
             newBill.put("bill_date", (String.valueOf(billById.getBill_date()).substring(0, 10)));
             newBill.put("due_date", (String.valueOf(billById.getDue_date()).substring(0, 10)));
             newBill.put("amount_due", billById.getAmount_due());
+
+            if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode actualObj = mapper.readTree(billById.getAttachment());
+                newBill.put("attachment", actualObj);
+            }
+            else {
+                newBill.put("attachment", new EmptyJsonResponse());
+            }
 
             List<String> allCategories = new ArrayList<>();
             if (billById.getCategories().contains(",")) {
@@ -201,6 +218,14 @@ public class BillResource {
                 newBill.put("due_date", (String.valueOf(billById.getDue_date()).substring(0, 10)));
                 newBill.put("amount_due", billById.getAmount_due());
 
+                if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode actualObj = mapper.readTree(billById.getAttachment());
+                    newBill.put("attachment", actualObj);
+                }
+                else
+                    newBill.put("attachment", new EmptyJsonResponse());
+
                 List<String> allCategories = new ArrayList<>();
                 if (billById.getCategories().contains(",")) {
                     for (String category : billById.getCategories().split(",")) {
@@ -230,6 +255,14 @@ public class BillResource {
             if (!users.getId().equals(billById.getOwnerId())) {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             } else if (users.getId().equals(billById.getOwnerId())) {
+
+                if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+                    File file = fileRepository.findFileByBill(billById.getId());
+                    String filePath = UPLOAD_FOLDER + file.getFile_name_dir();
+                    Path fileToDelete = Paths.get(filePath);
+                    Files.delete(fileToDelete);
+                    fileRepository.delete(file);
+                }
                 billRepo.delete(billById);
                 return new ResponseEntity(HttpStatus.NO_CONTENT);
             } else {
@@ -342,6 +375,15 @@ public class BillResource {
                 newBill.put("bill_date", ((String) bill.get("bill_date")).substring(0, 10));
                 newBill.put("due_date", ((String) bill.get("due_date")).substring(0, 10));
                 newBill.put("amount_due", newBillToUpdate.getAmount_due());
+
+                if(!newBillToUpdate.getAttachment().equals(null) && !newBillToUpdate.getAttachment().equals("")){
+                    ObjectMapper mapper = new ObjectMapper();
+                    JsonNode actualObj = mapper.readTree(newBillToUpdate.getAttachment());
+                    newBill.put("attachment", actualObj);
+                }
+                else {
+                    newBill.put("attachment", new EmptyJsonResponse());
+                }
 
                 List<String> allCategories = new ArrayList<>();
                 if(newBillToUpdate.getCategories().contains(",")) {
