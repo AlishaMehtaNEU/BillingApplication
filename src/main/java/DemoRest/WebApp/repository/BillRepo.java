@@ -20,7 +20,6 @@ public class BillRepo {
         return bills;
     }
     public Bill save(Bill bill){
-        System.out.println("bill --------- " + bill);
         Bill billSaved = billRepository.save(bill);
         return billSaved;
     }

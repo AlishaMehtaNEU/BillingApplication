@@ -58,6 +58,17 @@ public class Bill {
     @Column(name = "paymentStatus")
     private paymentStatus paymentStatus;
 
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
+
+    @Column(name = "attachment")
+    private String attachment;
+
     public String getId() {
         return id;
     }
