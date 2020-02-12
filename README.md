@@ -1,4 +1,7 @@
-# CSYE 6225 - Spring 2020
+Apply IAM passwork policy
+ student has setup organization
+ 
+ # CSYE 6225 - Spring 2020
 # webapp
 Building a Bill Tracking application. It will allow users to create, update, delete, attach and read bills.
 
@@ -95,4 +98,4 @@ Building a Bill Tracking application. It will allow users to create, update, del
    ```
    
 ## CI/CD
-- Currenlt using Cirle CI tools to run pr_check in config.yml on each PR raised from fork master branch to orag master and build_deploy on every merge to master.
+- Currenlty using Cirle CI tools to run pr_check in config.yml on each PR raised from fork master branch to organization master and build_deploy on every merge to master.
