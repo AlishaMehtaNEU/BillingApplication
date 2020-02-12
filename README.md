@@ -1,6 +1,6 @@
 # CSYE 6225 - Spring 2020
 # webapp
-Building a Bill Tracking application. It will allow users to create, update, delete, and read bills.
+Building a Bill Tracking application. It will allow users to create, update, delete, attach and read bills.
 
 ## Technology Stack
 - Java SpringBoot for REST API
@@ -11,7 +11,7 @@ Building a Bill Tracking application. It will allow users to create, update, del
 
 ## Build Instructions
 1. Clone repository
-2. Import maven project **Assignment3** in the **webapp** directory into intelliJ
+2. Import maven project in the **webapp** directory into intelliJ
 3. Run command mvn clean and mvn install
 
 ## Deploy Instructions
@@ -73,6 +73,26 @@ Building a Bill Tracking application. It will allow users to create, update, del
    ```
    PUT v1/bill/{id}
    ```      
+7. **Attach a file to Bill**
+   This api attaches a new file for a bill for the logged in user.
+   ```
+   POST /v1/bill/{id}/file
+   ```
+8. **Get a file attached to a Bill**
+   This api gets file for a bill for the logged in user.
+   ```
+   GET /v1/bill/{billId}/file/{fileId}
+   ```
+7. **Delete a file attached to a Bill**
+   This api deleted file for a bill for the logged in user.
+   ```
+   DELETE /v1/bill/{billId}/file/{fileId}
+   ```
+7. **Update a file attached to a Bill**
+   This api updates file for a bill for the logged in user.
+   ```
+   PUT /v1/bill/{billId}/file/
+   ```
    
 ## CI/CD
 - Currenlt using Cirle CI tools to run pr_check in config.yml on each PR raised from fork master branch to orag master and build_deploy on every merge to master.

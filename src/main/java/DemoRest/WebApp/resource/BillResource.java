@@ -173,7 +173,8 @@ public class BillResource {
             newBill.put("due_date", (String.valueOf(billById.getDue_date()).substring(0, 10)));
             newBill.put("amount_due", billById.getAmount_due());
 
-            if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+
+            if(!(billById.getAttachment() == null) && !billById.getAttachment().equals("")){
                 ObjectMapper mapper = new ObjectMapper();
                 JsonNode actualObj = mapper.readTree(billById.getAttachment());
                 newBill.put("attachment", actualObj);
@@ -218,7 +219,7 @@ public class BillResource {
                 newBill.put("due_date", (String.valueOf(billById.getDue_date()).substring(0, 10)));
                 newBill.put("amount_due", billById.getAmount_due());
 
-                if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+                if(!(billById.getAttachment() == null) && !billById.getAttachment().equals("")){
                     ObjectMapper mapper = new ObjectMapper();
                     JsonNode actualObj = mapper.readTree(billById.getAttachment());
                     newBill.put("attachment", actualObj);
@@ -256,7 +257,7 @@ public class BillResource {
                 return new ResponseEntity(HttpStatus.UNAUTHORIZED);
             } else if (users.getId().equals(billById.getOwnerId())) {
 
-                if(!billById.getAttachment().equals(null) && !billById.getAttachment().equals("")){
+                if(!(billById.getAttachment() == null) && !billById.getAttachment().equals("")){
                     File file = fileRepository.findFileByBill(billById.getId());
                     String filePath = UPLOAD_FOLDER + file.getFile_name_dir();
                     Path fileToDelete = Paths.get(filePath);
